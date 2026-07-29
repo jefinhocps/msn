@@ -4,8 +4,8 @@ Projeto de estudo em Java focado em comunicação em rede via TCP Sockets, Threa
 
 ## 🎯 Objetivos
 - [x] Inicialização do repositório
-- [ ] Servidor de chat multithreaded (TCP)
-- [ ] Cliente em modo terminal
+- [x] Servidor de chat multithreaded (TCP)
+- [x] Cliente em modo terminal
 - [ ] Interface gráfica (Swing) no estilo MSN
 - [ ] Recursos clássicos (Chamar atenção, sons, status)
 
