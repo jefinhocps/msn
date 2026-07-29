@@ -3,8 +3,10 @@ package src.br.com.msn.server;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 public class ServidorMain {
@@ -47,13 +49,17 @@ public class ServidorMain {
      * @param remetente Cliente que enviou (pode ser null se for para enviar para todos, inclusive quem enviou).
      */
     public static void transmitirMensagem(String mensagem, GerenciadorCliente remetente) {
+        // Fazemos uma cópia rápida da lista para iterar com segurança fora do bloco sincronizado
+        List<GerenciadorCliente> listaParaEnvio;
         synchronized (clientesConectados) {
-            for (GerenciadorCliente cliente : clientesConectados) {
-                // Se quiser omitir o próprio remetente no broadcast:
-                if (cliente != remetente) {
-                    cliente.enviarMensagem(mensagem);
-                }
+            listaParaEnvio = new ArrayList<>(clientesConectados);
+        }
+
+        for (GerenciadorCliente cliente : listaParaEnvio) {
+            if (remetente != null && cliente == remetente) {
+                continue;
             }
+            cliente.enviarMensagem(mensagem);
         }
     }
 
