@@ -17,12 +17,24 @@ public class ClienteMain {
         System.out.println("💬 Conectando ao Servidor MSN...");
         System.out.println("==========================================");
 
+        Scanner scanner = new Scanner(System.in);
+        System.out.print("Digite seu nome de usuário: ");
+        String apelido = scanner.nextLine();
+       
+
         try {
             Socket socket = new Socket(SERVIDOR_IP, PORTA);
             
-            BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
             PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
-            Scanner scanner = new Scanner(System.in);
+            BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));       
+            
+            out.println(apelido); // Envia o apelido para o servidor
+
+            System.out.println("==========================================");
+            System.out.println("💬 Conectado ao servidor como " + apelido);
+            System.out.println("Digite suas mensagens abaixo (ou /sair para encerrar):");
+            System.out.println("==========================================");
+            
 
             // Thread dedicada exclusivamente a ESCUTAR as mensagens do servidor
             Thread threadEscuta = new Thread(() -> {
